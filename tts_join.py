@@ -19,7 +19,7 @@ def run_tts():
     with open('draft.txt', 'r') as input_file:
         sentences = nltk.sent_tokenize(input_file.read())
         for sentence in sentences:
-            if sum(map(len, chunked_input[i])) + len(sentence) < 4096:
+            if sum(map(len, chunked_input[i])) + len(chunked_input[i]) + len(sentence) < 4096:
                 chunked_input[i].append(sentence)
             else:
                 i += 1
@@ -27,7 +27,7 @@ def run_tts():
 
     chunked_input = [' '.join(a) for a in chunked_input]
 
-    print(f'Preparing to run TTS in {len(chunked_input)} chunks...')
+    print(f'Preparing to run TTS in {len(chunked_input)} chunks...({list(map(len, chunked_input))})')
 
     for n, chunk in enumerate(chunked_input):
         print('.', end='')
