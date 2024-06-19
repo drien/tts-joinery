@@ -41,7 +41,7 @@ def run_tts():
 
     files = glob.glob('output_segment_*.mp3')
     joined = None
-    for file in files:
+    for file in sorted(files):
         segment = AudioSegment.from_mp3(file)
         if joined is None:
             joined = segment
