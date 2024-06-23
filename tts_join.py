@@ -1,3 +1,4 @@
+import click
 import glob
 import nltk
 import os
@@ -8,7 +9,10 @@ from pydub import AudioSegment
 
 # Diffing by sentence to re-read??
 
-def run_tts():
+@click.command()
+@click.option('--voice', default='alloy')
+@click.option('--service', default='openai')
+def run_tts(voice, service):
     nltk.download('punkt')
 
 
@@ -33,7 +37,7 @@ def run_tts():
         print('.', end='')
         response = client.audio.speech.create(
             model="tts-1-hd",
-            voice="fable",
+            voice=voice,
             input=chunk,
         )
 
