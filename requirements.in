@@ -1,4 +1,6 @@
-pydub
+click
+nltk
 openai
 pip-tools
-nltk
+platformdirs
+pydub
