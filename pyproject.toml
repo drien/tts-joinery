@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tts-joinery"
+version = "1.0.0"
+authors = [
+    {name = "Adrien Delessert", email = "adrien@delessert.com"},
+]
+description = "Automate chunking long texts to produce a single audio file from text-to-speech APIs"
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = ["openai", "tts", "ai", "cli"]
+license = {file = "LICENSE"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "click",
+    "nltk",
+    "openai",
+    "pip-tools",
+    "platformdirs",
+    "pydub",
+    "python-dotenv",
+]
+
+[project.scripts]
+ttsjoin = "joinery.cli:run_tts"
+
+[project.urls]
+Homepage = "https://github.com/drien/tts-joinery"
