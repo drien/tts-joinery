@@ -18,7 +18,9 @@ pip install tts-joinery
 
 or use `pipx` to install as a standalone tool.
 
--
+**Requires ffmpeg** for the audio file processing.
+
+Installation may vary depending on your system. On Linux you can use your system package manager. On Mac `brew install ffmpeg` should work.
 
 ## Usage
 
