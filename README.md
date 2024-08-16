@@ -18,9 +18,7 @@ pip install tts-joinery
 
 or use `pipx` to install as a standalone tool.
 
-**Requires ffmpeg** for the audio file processing.
-
-Installation may vary depending on your system. On Linux you can use your system package manager. On Mac `brew install ffmpeg` should work.
+-
 
 ## Usage
 
@@ -72,7 +70,6 @@ You can also use tts-joinery as part of your Python project:
 from joinery.op import JoinOp
 from joinery.api.openai import OpenAIApi
 
-# Initialize the TTSJoinery with parameters
 tts = JoinOp(
     text='This is only a test!',
     api=OpenAIApi(
@@ -82,7 +79,6 @@ tts = JoinOp(
     ),
 )
 
-# Process the text to file
 tts.process_to_file('output.mp3')
 ```
 
