@@ -26,6 +26,8 @@ Installation may vary depending on your system. On Linux you can use your system
 
 ### Command-Line Interface (CLI)
 
+The CLI expects to find an OpenAI API Key in a `OPENAI_API_KEY` environment variable, or in a .env file.
+
 #### Syntax
 
 ```
