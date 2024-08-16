@@ -1,0 +1,2 @@
+class MissingConfigError(Exception):
+    pass
