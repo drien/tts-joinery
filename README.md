@@ -18,6 +18,10 @@ pip install tts-joinery
 
 or use `pipx` to install as a standalone tool.
 
+**Requires ffmpeg** for the audio file processing.
+
+Installation may vary depending on your system. On Linux you can use your system package manager. On Mac `brew install ffmpeg` should work.
+
 ## Usage
 
 ### Command-Line Interface (CLI)
@@ -65,15 +69,16 @@ ttsjoin --input-file input.txt --output-file output.mp3 --no-cache
 You can also use tts-joinery as part of your Python project:
 
 ```python
-from tts_joinery.op import JoinOp
-from tts_joinery.api.openai import OpenAIApi
+from joinery.op import JoinOp
+from joinery.api.openai import OpenAIApi
 
 # Initialize the TTSJoinery with parameters
 tts = JoinOp(
     text='This is only a test!',
     api=OpenAIApi(
         model='tts-1-hd',
-        voice='onyx'
+        voice='onyx',
+        api_key=OPENAI_API_KEY,
     ),
 )
 
