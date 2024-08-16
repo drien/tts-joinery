@@ -34,22 +34,32 @@ load_dotenv()
 @click.option("--voice", default="alloy", help="Slug of the voice to be used")
 @click.option("--no-cache", default=False, help="Disable caching")
 def run_tts(input_file, output_file, model, service, voice, no_cache):
-    nltk.download("punkt")
-    if output_file.name == "<stdout>" and sys.stdout.isatty():
+    nltk.download("punkt", quiet=True)
+
+    if input_file.name == "<stdin>" and sys.stdout.isatty():
         click.echo(
             click.style(
-                "Refusing to write binary output to your terminal, redirect output or specify --output-file.",
-                fg="red",
+                "Reading input text from stdin...use --input-file to specify a file to read instead.",
+                fg="yellow",
             ),
             err=True,
         )
-        return
 
     text = input_file.read()
     if not text:
         click.echo(
             click.style(
                 "Empty input.",
+                fg="red",
+            ),
+            err=True,
+        )
+        return
+
+    if output_file.name == "<stdout>" and sys.stdout.isatty():
+        click.echo(
+            click.style(
+                "Refusing to write binary output to your terminal, redirect output or specify --output-file.",
                 fg="red",
             ),
             err=True,
