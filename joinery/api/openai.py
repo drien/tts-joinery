@@ -4,7 +4,7 @@ from openai import OpenAI
 from pathlib import Path
 from typing import Optional
 
-from joinery.api.base import BaseTtsApi
+from .base import BaseTtsApi
 from joinery.exceptions import MissingConfigError
 
 
@@ -22,7 +22,7 @@ class OpenAIApi(BaseTtsApi):
     def process_to_file(self, text: str) -> Path:
         file_path = self.get_file_path(text)
 
-        if not self.caching_enabled or not os.path.exists(file_path):
+        if not self.caching_enabled or not file_path.exists():
             with self.client.audio.speech.with_streaming_response.create(
                 model=self.model,
                 voice=self.voice,
