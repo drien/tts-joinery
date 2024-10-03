@@ -4,7 +4,7 @@ from openai import OpenAI
 from pathlib import Path
 from typing import Optional
 
-from .base import BaseTtsApi
+from joinery.api.base import BaseTtsApi
 from joinery.exceptions import MissingConfigError
 
 
