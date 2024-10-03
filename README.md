@@ -86,9 +86,21 @@ tts = JoinOp(
 tts.process_to_file('output.mp3')
 ```
 
+## Changelog
+
+#### v1.0.2 (2024-10-03)
+
+-   Fixed crash when running with caching disabled (#3)
+
 ## Contributing
 
 Contributions welcome, particularly other TTS APIs, check the issues beforehand and feel free to open a PR. Code is formatted with Black.
+
+## Contributors
+
+Special thanks to:
+
+-   [Mayank Vishwakarma](mailto:mayank@mynk.me) (@mayankwebbing)
 
 ## License
 
