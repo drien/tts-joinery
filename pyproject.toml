@@ -31,3 +31,8 @@ ttsjoin = "joinery.cli:run_tts"
 
 [project.urls]
 Homepage = "https://github.com/drien/tts-joinery"
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+]
