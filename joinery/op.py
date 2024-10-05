@@ -13,6 +13,7 @@ class JoinOp:
     def __init__(self, text: str, api: BaseTtsApi):
         self.text = text
         self.api = api
+        self._chunked_hash = None
         self._chunks = [[]]
         self._chunk_iter = 0
 
@@ -27,8 +28,12 @@ class JoinOp:
         audio.export(file_path)
 
     def chunk_all(self):
-        for sent in self.tokenize():
-            self.add_to_chunks(sent)
+        if len(self._chunks) > 0 and hash(self.text) != self._chunked_hash:
+            # Only run chunking if text has changed
+            self._chunked_hash = hash(self.text)
+            for sent in self.tokenize():
+                self.add_to_chunks(sent)
+
         return self.chunked_text()
 
     def tokenize(self) -> list[str]:
