@@ -1,5 +1,7 @@
 import click
+import glob
 import nltk
+import os
 import shutil
 import sys
 import tempfile
@@ -12,7 +14,8 @@ from joinery.op import JoinOp
 load_dotenv()
 
 
-@click.command()
+@click.group(invoke_without_command=True)
+@click.pass_context
 @click.option(
     "--input-file",
     help="Plaintext file to process into speech, otherwise stdin",
@@ -32,8 +35,11 @@ load_dotenv()
     "--service", default="openai", help="API service (currently only supports openai)"
 )
 @click.option("--voice", default="alloy", help="Slug of the voice to be used")
-@click.option("--no-cache", default=False, help="Disable caching")
-def run_tts(input_file, output_file, model, service, voice, no_cache):
+@click.option("--no-cache", is_flag=True, default=False, help="Disable caching")
+def run_tts(ctx, input_file, output_file, model, service, voice, no_cache):
+    if ctx.invoked_subcommand:
+        return
+
     nltk.download("punkt", quiet=True)
 
     if input_file.name == "<stdin>" and sys.stdout.isatty():
@@ -106,6 +112,38 @@ def run_tts(input_file, output_file, model, service, voice, no_cache):
             shutil.copyfileobj(f, output_file.buffer)
     else:
         joined.export(output_file, format="mp3")
+
+
+@run_tts.group("cache")
+def cache():
+    pass
+
+
+def _cache_dir():
+    return list(API_BY_SERVICE_SLUG.values())[
+        0
+    ]().CACHE_DIR  # Assume cache dir never overridden? Eh.
+
+
+@cache.command()
+def show():
+    click.echo(
+        _cache_dir(),
+        err=True,
+    )
+
+
+@cache.command()
+def clear():
+    cache_dir = _cache_dir()
+    click.echo(
+        click.style(f"Clearing files from {cache_dir}...", fg="yellow"),
+        err=True,
+    )
+    files = glob.glob(f"{cache_dir}/*")
+    for f in files:
+        os.remove(f)
+        click.echo(f"Removed {f}", err=True)
 
 
 if __name__ == "__main__":
