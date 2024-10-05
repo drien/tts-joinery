@@ -31,12 +31,13 @@ The CLI expects to find an OpenAI API Key in a `OPENAI_API_KEY` environment vari
 #### Syntax
 
 ```
-ttsjoin [OPTIONS]
+ttsjoin [OPTIONS] [COMMAND]
 ```
 
 #### Options
 
 ```
+Options:
 --input-file FILENAME   Plaintext file to process into speech, otherwise stdin
 --output-file FILENAME  MP3 result, otherwise stdout
 --model TEXT            Slug of the text-to-speech model to be used
@@ -44,6 +45,9 @@ ttsjoin [OPTIONS]
 --voice TEXT            Slug of the voice to be used
 --no-cache BOOLEAN      Disable caching
 --help                  Show this message and exit.
+
+Commands:
+  cache [clear, show]
 ```
 
 #### Examples
@@ -64,6 +68,12 @@ echo "Your text to be processed" | ttsjoin > output.mp3
 
 ```bash
 ttsjoin --input-file input.txt --output-file output.mp3 --no-cache
+```
+
+5. Clear cache directory
+
+```bash
+ttsjoin cache clear
 ```
 
 ### Python Library
@@ -93,6 +103,12 @@ tts.process_to_file('output.mp3')
 
 ## Changelog
 
+#### v1.0.3 (2024-10-05)
+
+-   Added cache management commands to cli
+-   Fixed a bug when running
+-   Added end-to-end tests
+
 #### v1.0.2 (2024-10-03)
 
 -   Fixed crash when running with caching disabled (#3)
@@ -100,6 +116,8 @@ tts.process_to_file('output.mp3')
 ## Contributing
 
 Contributions welcome, particularly other TTS APIs, check the issues beforehand and feel free to open a PR. Code is formatted with Black.
+
+Test can be run manually. Suite includes end-to-end tests with live API calls, ensure you have an OPENAI_API_KEY set in `.env.test`, and run `pytest`. You can install development dependencies with `pip install -e .[test]`
 
 ## Contributors
 
