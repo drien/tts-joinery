@@ -4,7 +4,7 @@ tts-joinery is a Python library and CLI tool to work around length limitations i
 
 Since currently-popular APIs are limited to 4096 characters, this library will:
 
--   Chunk the input text into sentences using the [NLTK Punkt module](https://www.nltk.org/api/nltk.tokenize.punkt.html)
+-   Chunk the input text into sentences using the [NLTK Punkt module](https://www.nltk.org/api/nltk.tokenize.punkt.html) (for better audio by avoiding segments split in the middle of a word or sentence).
 -   Run each chunk through the TTS API
 -   Join together the resulting output to produce a single MP3 file
 
@@ -60,7 +60,7 @@ ttsjoin --input-file input.txt --output-file output.mp3 --model tts-1 --service 
 echo "Your text to be processed" | ttsjoin > output.mp3
 ```
 
-3. Each chunk of text is cached for performance when the same text multiple times, this can be disabled:
+3. Each chunk of text is cached for performance when running the same text multiple times, this can be disabled:
 
 ```bash
 ttsjoin --input-file input.txt --output-file output.mp3 --no-cache
@@ -71,8 +71,13 @@ ttsjoin --input-file input.txt --output-file output.mp3 --no-cache
 You can also use tts-joinery as part of your Python project:
 
 ```python
+import nltk
+
 from joinery.op import JoinOp
 from joinery.api.openai import OpenAIApi
+
+# Only need to download once, handled for you automatically in the CLI
+nltk.download('punkt', quiet=True)
 
 tts = JoinOp(
     text='This is only a test!',
