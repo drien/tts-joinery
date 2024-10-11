@@ -18,7 +18,7 @@ classifiers = [
 ]
 dependencies = [
     "click",
-    "nltk",
+    "nltk>=3.8.2",
     "openai",
     "pip-tools",
     "platformdirs",

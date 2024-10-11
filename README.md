@@ -87,7 +87,7 @@ from joinery.op import JoinOp
 from joinery.api.openai import OpenAIApi
 
 # Only need to download once, handled for you automatically in the CLI
-nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
 
 tts = JoinOp(
     text='This is only a test!',

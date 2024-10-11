@@ -1,4 +1,5 @@
 import os
+import nltk
 import pytest
 import subprocess
 import time
@@ -11,6 +12,7 @@ from joinery.op import JoinOp
 from joinery.api.openai import OpenAIApi
 
 load_dotenv(find_dotenv(".env.test"))
+nltk.download("punkt_tab")
 
 
 @pytest.fixture

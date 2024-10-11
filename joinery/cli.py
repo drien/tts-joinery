@@ -40,7 +40,7 @@ def run_tts(ctx, input_file, output_file, model, service, voice, no_cache):
     if ctx.invoked_subcommand:
         return
 
-    nltk.download("punkt", quiet=True)
+    nltk.download("punkt_tab", quiet=True)
 
     if input_file.name == "<stdin>" and sys.stdout.isatty():
         click.echo(
