@@ -14,6 +14,11 @@ from joinery.op import JoinOp
 load_dotenv()
 
 
+def _force_lowercase(ctx, param, value):
+    if value is not None:
+        return value.lower()
+
+
 @click.group(invoke_without_command=True)
 @click.pass_context
 @click.option(
@@ -29,12 +34,23 @@ load_dotenv()
     type=click.File("wb+"),
 )
 @click.option(
-    "--model", default="tts-1", help="Slug of the text-to-speech model to be used"
+    "--model",
+    default="tts-1",
+    help="Slug of the text-to-speech model to be used",
+    callback=_force_lowercase,
 )
 @click.option(
-    "--service", default="openai", help="API service (currently only supports openai)"
+    "--service",
+    default="openai",
+    help="API service (currently only supports openai)",
+    callback=_force_lowercase,
 )
-@click.option("--voice", default="alloy", help="Slug of the voice to be used")
+@click.option(
+    "--voice",
+    default="alloy",
+    help="Slug of the voice to be used",
+    callback=_force_lowercase,
+)
 @click.option("--no-cache", is_flag=True, default=False, help="Disable caching")
 def run_tts(ctx, input_file, output_file, model, service, voice, no_cache):
     if ctx.invoked_subcommand:
