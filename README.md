@@ -103,6 +103,11 @@ tts.process_to_file('output.mp3')
 
 ## Changelog
 
+#### v1.0.4 (2024-10-11)
+
+-   Fixed issue with nltk dependency [#4](https://github.com/drien/tts-joinery/issues/5)
+-   Model, voice, and service CLI params are now case-insensitive
+
 #### v1.0.3 (2024-10-05)
 
 -   Added cache management commands to cli
