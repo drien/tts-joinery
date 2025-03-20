@@ -36,8 +36,12 @@ def _force_lowercase(ctx, param, value):
 @click.option(
     "--model",
     default="tts-1",
-    help="Slug of the text-to-speech model to be used",
+    help="Slug of the text-to-speech model to be used (tts-1 or gpt-4o-mini-tts)",
     callback=_force_lowercase,
+)
+@click.option(
+    "--instructions",
+    help="Voice instructions (only for gpt-4o-mini-tts model)",
 )
 @click.option(
     "--service",
@@ -52,7 +56,9 @@ def _force_lowercase(ctx, param, value):
     callback=_force_lowercase,
 )
 @click.option("--no-cache", is_flag=True, default=False, help="Disable caching")
-def run_tts(ctx, input_file, output_file, model, service, voice, no_cache):
+def run_tts(
+    ctx, input_file, output_file, model, service, voice, no_cache, instructions
+):
     if ctx.invoked_subcommand:
         return
 
@@ -90,7 +96,12 @@ def run_tts(ctx, input_file, output_file, model, service, voice, no_cache):
 
     op = JoinOp(
         text,
-        api=API_BY_SERVICE_SLUG[service](model, voice, caching_enabled=(not no_cache)),
+        api=API_BY_SERVICE_SLUG[service](
+            model=model,
+            voice=voice,
+            caching_enabled=(not no_cache),
+            instructions=instructions,
+        ),
     )
     sentences = op.tokenize()
     with click.progressbar(
