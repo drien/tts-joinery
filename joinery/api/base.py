@@ -25,11 +25,7 @@ class BaseTtsApi:
 
     def get_file_path(self, text: str) -> Path:
         hash_content = text
-        if (
-            hasattr(self, "instructions")
-            and self.instructions
-            and self.model == "gpt-4o-mini-tts"
-        ):
+        if hasattr(self, "instructions") and self.instructions:
             hash_content = f"{text}|||{self.instructions}"
         text_hash = hashlib.md5(hash_content.encode("utf-8")).hexdigest()
         return Path(
