@@ -1,8 +1,8 @@
 import glob
 import hashlib
 import os
-
 from pathlib import Path
+
 from platformdirs import user_data_dir
 
 
@@ -24,7 +24,10 @@ class BaseTtsApi:
             os.remove(f)
 
     def get_file_path(self, text: str) -> Path:
-        text_hash = hashlib.md5(text.encode("utf-8")).hexdigest()
+        hash_content = text
+        if hasattr(self, "instructions") and self.instructions:
+            hash_content = f"{text}|||{self.instructions}"
+        text_hash = hashlib.md5(hash_content.encode("utf-8")).hexdigest()
         return Path(
             f"{self.CACHE_DIR}/{self.service}_{self.model}_{self.voice}_{text_hash}.mp3"
         )

@@ -40,9 +40,10 @@ ttsjoin [OPTIONS] [COMMAND]
 Options:
 --input-file FILENAME   Plaintext file to process into speech, otherwise stdin
 --output-file FILENAME  MP3 result, otherwise stdout
---model TEXT            Slug of the text-to-speech model to be used
+--model TEXT            Slug of the text-to-speech model to be used (tts-1, tts-1-hd or gpt-4o-mini-tts)
 --service TEXT          API service (currently only supports openai)
 --voice TEXT            Slug of the voice to be used
+--instructions TEXT     Voice instructions (only for gpt-4o-mini-tts model)
 --no-cache BOOLEAN      Disable caching
 --help                  Show this message and exit.
 
@@ -55,7 +56,11 @@ Commands:
 1. Using an input file and specifying an output file:
 
 ```bash
+# Basic usage with tts-1 model
 ttsjoin --input-file input.txt --output-file output.mp3 --model tts-1 --service openai --voice onyx
+
+# Using the new gpt-4o-mini-tts model with instructions
+ttsjoin --input-file input.txt --output-file output.mp3 --model gpt-4o-mini-tts --voice ballad --instructions "Speak in a calm, soothing voice"
 ```
 
 2. Using stdin and stdout with default options:
@@ -92,9 +97,10 @@ nltk.download('punkt_tab', quiet=True)
 tts = JoinOp(
     text='This is only a test!',
     api=OpenAIApi(
-        model='tts-1-hd',
+        model='tts-1-hd',  # or 'gpt-4o-mini-tts' for the new model
         voice='onyx',
         api_key=OPENAI_API_KEY,
+        instructions='Speak in a calm, soothing voice',  # Optional, only for gpt-4o-mini-tts
     ),
 )
 
@@ -102,6 +108,10 @@ tts.process_to_file('output.mp3')
 ```
 
 ## Changelog
+
+#### v1.0.5 (2025-03-20)
+
+-   Added support for OpenAI's gpt-4o-mini-tts model and `instructions` parameter
 
 #### v1.0.4 (2024-10-11)
 

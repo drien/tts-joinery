@@ -50,15 +50,21 @@ def test_direct_usage_long_text(api, long_text, tmp_path):
     assert len(audio) > 0  # Check if audio has content
 
 
-def test_cli_short_text(short_text, tmp_path):
+@pytest.mark.parametrize("model,instructions", [
+    ("tts-1", None),
+    ("gpt-4o-mini-tts", "Speak in a calm, soothing voice"),
+])
+def test_cli_short_text(short_text, tmp_path, model, instructions):
     input_file = tmp_path / "input_short.txt"
     output_file = tmp_path / "output_short.mp3"
 
     input_file.write_text(short_text)
 
-    result = subprocess.run(
-        ["ttsjoin", "--input-file", str(input_file), "--output-file", str(output_file)]
-    )
+    cmd = ["ttsjoin", "--input-file", str(input_file), "--output-file", str(output_file), "--model", model]
+    if instructions:
+        cmd.extend(["--instructions", instructions])
+    
+    result = subprocess.run(cmd)
     assert result.returncode == 0
 
     assert output_file.exists()

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tts-joinery"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
     {name = "Adrien Delessert", email = "adrien@delessert.com"},
 ]
@@ -19,7 +19,7 @@ classifiers = [
 dependencies = [
     "click",
     "nltk>=3.8.2",
-    "openai",
+    "openai>=1.67.0",
     "pip-tools",
     "platformdirs",
     "pydub",
