@@ -1,11 +1,11 @@
 import os
-
-from openai import OpenAI
 from pathlib import Path
 from typing import Optional
 
 from joinery.api.base import BaseTtsApi
 from joinery.exceptions import MissingConfigError
+
+from openai import OpenAI
 
 
 class OpenAIApi(BaseTtsApi):

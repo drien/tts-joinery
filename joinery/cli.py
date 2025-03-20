@@ -1,11 +1,11 @@
-import click
 import glob
-import nltk
 import os
 import shutil
 import sys
 import tempfile
 
+import click
+import nltk
 from dotenv import load_dotenv
 
 from joinery.api import API_BY_SERVICE_SLUG
